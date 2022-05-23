@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using NewsPortal.Entities;
-using NewsPortal.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,46 +9,36 @@ namespace NewsPortal.Controllers {
     [Route("api/articles")]
     [ApiController]
     public class ArticlesController: ControllerBase {
-        private readonly IRepository repository;
-
-        public ArticlesController(IRepository repository) {
-            this.repository = repository;
+        public ArticlesController() {
         }
 
         [HttpGet]
         public List<Article> Get() {
-            return repository.GetAllArticles();
+            return new List<Article>() { new Article() { Id = 1, Title = "Title1", Description = "Description1", CategoryId = 1, CreatedDateTime = "2022-05-22" } };
         }
 
         [HttpGet("{Id}")]
         public ActionResult<Article> Get(int Id)
         {
-            var article = repository.GetArticleById(Id);
-
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            return article;
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public ActionResult Post()
+        public ActionResult Post([FromBody] Article article)
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         [HttpPut]
         public ActionResult Update()
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         [HttpDelete]
         public ActionResult Delete()
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
     }
 }
