@@ -1,0 +1,13 @@
+<app-template-list [list]="categories">
+    <ng-container content>
+        <div *ngFor="let category of categories; let i = index" class="category-container">
+            <!-- <div>
+                {{ i }} - {{ category.name }}
+                <button (click)="deleteArticle()">Delete</button>
+            </div>
+            <div>
+                {{ category.createdDateTime | date:"yyyy-MM-dd" }}
+            </div> -->
+        </div>
+    </ng-container>
+</app-template-list>

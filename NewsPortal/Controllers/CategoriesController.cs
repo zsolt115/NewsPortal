@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NewsPortal.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,15 @@ namespace NewsPortal.Controllers {
     [Route("api/categories")]
     [ApiController]
     public class CategoriesController: ControllerBase {
+        private readonly ApplicationDbContext dbContext;
 
-        public CategoriesController() {
-            
+        public CategoriesController(ApplicationDbContext dbContext) {
+            this.dbContext = dbContext;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Category>>> Get() {
-            return new List<Category>() { new Category() { Id = 1, Name = "Name1", CreatedDateTime = "2022-05-22" } };
+            return await dbContext.Categories.ToListAsync();
         }
 
         [HttpGet("{Id:int}")]
@@ -25,8 +27,12 @@ namespace NewsPortal.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Category category) {
-            throw new NotImplementedException();
+        public async Task<ActionResult> Post([FromBody] Category category) {
+            dbContext.Add(category);
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
 
         [HttpPut]

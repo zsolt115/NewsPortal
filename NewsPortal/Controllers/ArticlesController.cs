@@ -1,4 +1,7 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NewsPortal.DTO;
 using NewsPortal.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,30 +12,59 @@ namespace NewsPortal.Controllers {
     [Route("api/articles")]
     [ApiController]
     public class ArticlesController: ControllerBase {
-        public ArticlesController() {
+        private readonly ApplicationDbContext dbContext;
+        private readonly IMapper mapper;
+
+        public ArticlesController(ApplicationDbContext dbContext, IMapper mapper) {
+            this.dbContext = dbContext;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public List<Article> Get() {
-            return new List<Article>() { new Article() { Id = 1, Title = "Title1", Description = "Description1", CategoryId = 1, CreatedDateTime = "2022-05-22" } };
+        public async Task<ActionResult<List<ArticleDTO>>> Get()
+        {
+            var articles = await dbContext.Articles.OrderBy(x => x.Title).ToListAsync();
+
+            return mapper.Map<List<ArticleDTO>>(articles);
         }
 
         [HttpGet("{Id}")]
-        public ActionResult<Article> Get(int Id)
+        public async Task<ActionResult<ArticleDTO>> Get(int Id)
         {
-            throw new NotImplementedException();
+            var article = await dbContext.Articles.FirstOrDefaultAsync(a => a.Id == Id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return mapper.Map<ArticleDTO>(article);
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Article article)
+        public async Task<ActionResult> Post([FromBody] ArticleCreationDTO createArticle)
         {
-            throw new NotImplementedException();
+            var article = mapper.Map<Article>(createArticle);
+
+            dbContext.Add(article);
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
 
-        [HttpPut]
-        public ActionResult Update()
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Update(int id, [FromBody] ArticleCreationDTO updateArticle)
         {
-            throw new NotImplementedException();
+            var article = mapper.Map<Article>(updateArticle);
+
+            article.Id = id;
+
+            dbContext.Entry(article).State= EntityState.Modified; // entry pass the data... already exists in the DB so we mark with modified
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
 
         [HttpDelete]

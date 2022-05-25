@@ -1,0 +1,13 @@
+<h2>
+    Create Category
+</h2>
+
+<form (submit)="saveChanges()" [formGroup]="form">
+    <div>
+        <label>Name*</label>
+        <input class="form-control" type="text" formControlName="name" required>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
+    </div>
+</form>

@@ -37,6 +37,8 @@ namespace NewsPortal
                     builder.WithOrigins(frontEndUrl).AllowAnyHeader().AllowAnyHeader();
                 });
             });
+
+            services.AddAutoMapper(typeof(Startup));
             // In production, the Angular files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
             //{

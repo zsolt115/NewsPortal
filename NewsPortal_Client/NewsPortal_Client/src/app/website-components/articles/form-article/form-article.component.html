@@ -1,0 +1,22 @@
+<form (submit)="saveChanges()" [formGroup]="form">
+    <div>
+        <label>Title*</label>
+        <input class="form-control" type="text" formControlName="title" required>
+    </div>
+    <div>
+        <label>Description*</label>
+        <input class="form-control" type="texarea" formControlName="description" required>
+    </div>
+    <div>
+        <label>Category*</label>
+        <select class="form-control" formControlName="categoryId" required>
+            <option value="">Select category</option>
+            <option *ngFor="let category of categoriesList" [value]="category.id">
+                {{ category.name }}
+            </option>
+        </select>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
+    </div>
+</form>
