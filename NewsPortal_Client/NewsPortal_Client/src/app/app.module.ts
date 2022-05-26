@@ -16,6 +16,7 @@ import { ArticlesListComponent } from './website-components/articles/articles-li
 import { CategoriesListComponent } from './website-components/categories/categories-list/categories-list.component';
 import { TemplateListComponent } from './utility/template-list/template-list.component';
 import { FormArticleComponent } from './website-components/articles/form-article/form-article.component';
+import { EditArticleComponent } from './website-components/articles/edit-article/edit-article.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FormArticleComponent } from './website-components/articles/form-article
     ArticlesListComponent,
     CategoriesListComponent,
     TemplateListComponent,
-    FormArticleComponent
+    FormArticleComponent,
+    EditArticleComponent
   ],
   imports: [
     BrowserModule,

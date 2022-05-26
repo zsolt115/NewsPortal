@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+
 import { articleCreationDTO, articleDTO } from '../website-components/articles/articles.model';
 
 @Injectable({
@@ -17,8 +18,8 @@ export class ArticlesService {
     return this.http.get<articleDTO[]>(this.apiUrl);
   }
 
-  getArticleById(id: number): Observable<articleDTO[]> {
-    return this.http.get<articleDTO[]>(`${this.apiUrl}/${id}`)
+  getArticleById(id: number): Observable<articleDTO> {
+    return this.http.get<articleDTO>(`${this.apiUrl}/${id}`)
   }
 
   create(article: articleCreationDTO) {

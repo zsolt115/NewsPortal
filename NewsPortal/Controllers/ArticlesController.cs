@@ -23,7 +23,7 @@ namespace NewsPortal.Controllers {
         [HttpGet]
         public async Task<ActionResult<List<ArticleDTO>>> Get()
         {
-            var articles = await dbContext.Articles.OrderBy(x => x.Title).ToListAsync();
+            var articles = await dbContext.Articles.OrderBy(a => a.Title).ToListAsync();
 
             return mapper.Map<List<ArticleDTO>>(articles);
         }
