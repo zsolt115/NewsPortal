@@ -60,17 +60,28 @@ namespace NewsPortal.Controllers {
 
             article.Id = id;
 
-            dbContext.Entry(article).State= EntityState.Modified; // entry pass the data... already exists in the DB so we mark with modified
+            dbContext.Entry(article).State = EntityState.Modified; // entry pass the data... already exists in the DB so we mark with modified
 
             await dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
-        [HttpDelete]
-        public ActionResult Delete()
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int Id)
         {
-            throw new NotImplementedException();
+            var article = await dbContext.Articles.FirstOrDefaultAsync(a => a.Id == Id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            dbContext.Remove(article);
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticlesService } from 'src/app/Services/articles.service';
+import { ArticlesService } from 'app/Services/articles.service';
 import { articleDTO } from '../articles/articles.model';
 
 @Component({
@@ -14,12 +14,20 @@ export class HomePageComponent implements OnInit {
   constructor(private articlesService: ArticlesService) { }
 
   ngOnInit(): void {
-    this.articlesService.getAllArticle().subscribe((articles: articleDTO[]) => {
-      this.articles = articles;
-    })
+    this.loadArticles();
   }
 
-  deleteArticle() {
+  loadArticles() {
+    this.articlesService.getAllArticle().subscribe((articles: articleDTO[]) => {
+      this.articles = articles;
+    });
+  }
 
+  deleteArticle(id: number) {
+    this.articlesService
+      .delete(id)
+      .subscribe(() => {
+        this.loadArticles();
+      });
   }
 }

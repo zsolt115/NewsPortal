@@ -15,8 +15,8 @@ export class EditArticleComponent implements OnInit {
   model: articleDTO;
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.articleService.getArticleById(params['id']).subscribe(article => {
+    this.activatedRoute.params.subscribe((params: { [x: string]: number; }) => {
+      this.articleService.getArticleById(params['id']).subscribe((article: articleDTO) => {
         this.model = article;
       });
     });

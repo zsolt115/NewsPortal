@@ -29,4 +29,8 @@ export class ArticlesService {
   edit(id: number, article: articleCreationDTO) {
     return this.http.put(`${this.apiUrl}/${id}`, article);
   }
+
+  delete(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

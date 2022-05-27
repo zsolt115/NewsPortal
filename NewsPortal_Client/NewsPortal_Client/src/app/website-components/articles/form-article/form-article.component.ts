@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { articleCreationDTO } from '../articles.model';
 
 @Component({
@@ -9,7 +8,7 @@ import { articleCreationDTO } from '../articles.model';
   styleUrls: ['./form-article.component.css']
 })
 export class FormArticleComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   @Input()
   model: articleCreationDTO;
@@ -35,11 +34,5 @@ export class FormArticleComponent implements OnInit {
 
   saveChanges() {
     this.onSaveChanges.emit(this.form.value);
-
-    console.log(this.form);
-  }
-  
-  deleteCategory() {
-
   }
 }

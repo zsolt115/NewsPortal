@@ -30,20 +30,16 @@ namespace NewsPortal
 
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder =>
-                {
-                    var frontEndUrl = Configuration.GetValue<string>("front-end-url");
-
-                    builder.WithOrigins(frontEndUrl).AllowAnyHeader().AllowAnyHeader();
-                });
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44351", "http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
             });
 
             services.AddAutoMapper(typeof(Startup));
-            // In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/src";
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

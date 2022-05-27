@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace NewsPortal.DTO
 {
-    public class ArticleCreationDTO
+    public class CategoryCreationDTO
     {
         [Required]
-        public string? Title { get; set; }
-        [Required]
-        public string? Description { get; set; }
-        public int CategoryId { get; set; }
+        public string Name { get; set; }
+
         public string? CreatedDateTime { get; set; }
     }
 }

@@ -14,6 +14,9 @@ namespace NewsPortal.Helper
         {
             CreateMap<ArticleDTO, Article>().ReverseMap(); // "bridge"
             CreateMap<ArticleCreationDTO, Article>();
+
+            CreateMap<CategoryDTO, Category>().ReverseMap();
+            CreateMap<CategoryCreationDTO, Category>();
         }
     }
 }

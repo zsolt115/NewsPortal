@@ -3,7 +3,7 @@
 <app-template-list [list]="articles">
     <ng-container content>
         <table mat-table [dataSource]="articles" class="mat-elevation-z8 table-index">
-            <ng-container matColumnDef="Title">
+            <ng-container matColumnDef="Title" class="">
                 <th mat-header-cell *matHeaderCellDef>Title<th>
                 <td mat-cell *matCellDef="let element">{{ element.title }}</td>
             </ng-container>
@@ -27,24 +27,12 @@
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let element">
                     <a routerLink="/articles/edit/{{element.id}}" mat-flat-button color="primary">Edit</a>
-                    <button mat-flat-button color="warn">Delete</button>
+                    <button mat-flat-button color="warn" (click)="deleteArticle(element.id)">Delete</button>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-        <!-- <div *ngFor="let article of articles; let i = index" class="article-container">
-            <div>
-                {{ i }} - {{ article.title }}
-                <button (click)="deleteArticle()">Delete</button>
-            </div>
-            <div>
-                {{ article.description }}
-            </div>
-            <div>
-                {{ article.createdDateTime | date:"yyyy-MM-dd" }}
-            </div>
-        </div> -->
     </ng-container>
 </app-template-list>

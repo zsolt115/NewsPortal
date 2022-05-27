@@ -1,3 +1,5 @@
 <h1>Edit Article</h1>
 
 <app-form-article *ngIf="model" [model]="model" (onSaveChanges)="saveChanges($event)"></app-form-article>
+
+<mat-spinner *ngIf="!model"></mat-spinner>

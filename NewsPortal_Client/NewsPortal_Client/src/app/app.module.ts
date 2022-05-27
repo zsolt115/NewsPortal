@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,11 +13,10 @@ import { CategoriesComponent } from './website-components/categories/categories.
 import { HomePageComponent } from './website-components/home-page/home-page.component';
 import { CreateCategoryComponent } from './website-components/categories/create-category/create-category.component';
 import { CreateArticleComponent } from './website-components/articles/create-article/create-article.component';
-import { ArticlesListComponent } from './website-components/articles/articles-list/articles-list.component';
-import { CategoriesListComponent } from './website-components/categories/categories-list/categories-list.component';
 import { TemplateListComponent } from './utility/template-list/template-list.component';
 import { FormArticleComponent } from './website-components/articles/form-article/form-article.component';
 import { EditArticleComponent } from './website-components/articles/edit-article/edit-article.component';
+import { FormCategoryComponent } from './website-components/categories/form-category/form-category.component';
 
 @NgModule({
   declarations: [
@@ -27,11 +27,10 @@ import { EditArticleComponent } from './website-components/articles/edit-article
     HomePageComponent,
     CreateCategoryComponent,
     CreateArticleComponent,
-    ArticlesListComponent,
-    CategoriesListComponent,
     TemplateListComponent,
     FormArticleComponent,
-    EditArticleComponent
+    EditArticleComponent,
+    FormCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +38,8 @@ import { EditArticleComponent } from './website-components/articles/edit-article
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
