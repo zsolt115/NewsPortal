@@ -11,3 +11,10 @@ export interface articleDTO {
     categoryId: number;
     createdDateTime: string;
 }
+
+export interface articleCategoryDTO {
+    title: string;
+    description: string;
+    categoryName: string;
+    createdDateTime: string;
+}

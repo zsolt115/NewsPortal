@@ -1,1 +1,47 @@
-<p>articles works!</p>
+<div>
+    <h2>
+        Create Article
+    </h2>
+    
+    <app-form-article (onSaveChanges)="saveChanges($event)"></app-form-article>
+</div>
+
+<div class="row" style="margin: 50px;">
+    <app-template-list [list]="articles">
+        <ng-container content>
+            <table mat-table [dataSource]="articles" class="mat-elevation-z8 table-index">
+                <ng-container matColumnDef="Title" class="">
+                    <th mat-header-cell *matHeaderCellDef>Title<th>
+                    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Description">
+                    <th mat-header-cell *matHeaderCellDef>Description<th>
+                    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Category Name">
+                    <th mat-header-cell *matHeaderCellDef>Category Name<th>
+                    <td mat-cell *matCellDef="let element">{{ element.categoryName }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="CreatedDateTime">
+                    <th mat-header-cell *matHeaderCellDef>CreatedDateTime<th>
+                    <td mat-cell *matCellDef="let element">{{ element.createdDateTime | date: "YYYY-MMM-dd" }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a routerLink="/articles/edit/{{element.id}}" mat-flat-button color="primary">Edit</a>
+                        <button mat-flat-button color="warn" (click)="deleteArticle(element.id)">Delete</button>
+                    </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+    
+        </ng-container>
+    </app-template-list>
+</div>

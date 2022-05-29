@@ -10,5 +10,6 @@ namespace NewsPortal.Entities {
         public string? Name { get; set; }
         public string? CreatedDateTime { get; set; }
 
+        public List<Article> Articles { get; set; }
     }
 }

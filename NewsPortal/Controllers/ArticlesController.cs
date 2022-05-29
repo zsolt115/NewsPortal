@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewsPortal.DTO;
 using NewsPortal.Entities;
+using NewsPortal.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,36 @@ namespace NewsPortal.Controllers {
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<List<ArticleDTO>>> Get()
         {
-            var articles = await dbContext.Articles.OrderBy(a => a.Title).ToListAsync();
+            var articles = await dbContext.Articles.OrderByDescending(a => a.CreatedDateTime).ToListAsync();
 
             return mapper.Map<List<ArticleDTO>>(articles);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Get([FromQuery] PaginationDTO paginationDTO)
+        {
+            var queryable = dbContext.Articles
+                    .Join(dbContext.Categories,
+                        a => a.CategoryId,
+                        c => c.Id,
+                        (a, c) => new
+                        {
+                            Title = a.Title,
+                            Description = a.Description,
+                            CategoryName = c.Name,
+                            CreatedDateTime = a.CreatedDateTime
+                        }
+                    )
+                    .AsQueryable();
+
+            await HttpContext.InsertParametersPaginationInHeader(queryable);
+
+            var articles = await queryable.OrderByDescending(a => a.CreatedDateTime).Paginate(paginationDTO).ToListAsync();
+
+            return Ok(articles);
         }
 
         [HttpGet("{Id}")]
@@ -82,6 +107,55 @@ namespace NewsPortal.Controllers {
             await dbContext.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult> Search([FromQuery] SearchArticleDTO searchArticleDTO)
+        {
+            var articlesQueryable = dbContext.Articles
+                .Join(dbContext.Categories,
+                    a => a.CategoryId,
+                    c => c.Id,
+                    (a, c) => new
+                    {
+                        Title = a.Title,
+                        Description = a.Description,
+                        CategoryName = c.Name,
+                        CreatedDateTime = a.CreatedDateTime
+                    }
+                )
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchArticleDTO.search))
+            {
+                articlesQueryable = articlesQueryable.Where(a => a.Title.Contains(searchArticleDTO.search) || a.Description.Contains(searchArticleDTO.search));
+            }
+
+            await HttpContext.InsertParametersPaginationInHeader(articlesQueryable);
+
+            var articles = await articlesQueryable.OrderByDescending(a => a.CreatedDateTime).Paginate(searchArticleDTO.PaginationDTO).ToListAsync();
+
+            return Ok(articles);
+        }
+
+        [HttpGet("articlesList")]
+        public async Task<ActionResult> GetArticles()
+        {
+            var articlesList =
+                dbContext.Articles
+                    .Join(dbContext.Categories,
+                    a => a.CategoryId,
+                    c => c.Id,
+                    (a, c) => new
+                    {
+                        Title = a.Title,
+                        Description = a.Description,
+                        CategoryName = c.Name,
+                        CreatedDateTime = a.CreatedDateTime
+                    }
+                );
+
+            return Ok(articlesList);
         }
     }
 }

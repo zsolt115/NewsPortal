@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { articleCreationDTO } from '../articles.model';
+import { CategoriesService } from 'app/Services/category.service';
+import { categoryDTO } from 'app/website-components/categories/categories.model';
 
 @Component({
   selector: 'app-form-article',
@@ -8,28 +10,36 @@ import { articleCreationDTO } from '../articles.model';
   styleUrls: ['./form-article.component.css']
 })
 export class FormArticleComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private categoriesService: CategoriesService) { }
 
   @Input()
   model: articleCreationDTO;
 
-  categoriesList = [{id: 1, name: 'Sports'}, {id: 2, name: 'Games'}];
+  categoriesList: categoryDTO[];
   form: FormGroup;
 
   @Output()
   onSaveChanges: EventEmitter<articleCreationDTO> = new EventEmitter<articleCreationDTO>();
 
   ngOnInit(): void {
+    this.loadCategories();
+
     this.form = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      categoryId: null,
       createdDateTime: new Date
     });
 
     if (this.model !== undefined) {
       this.form.patchValue(this.model);
     }
+  }
+
+  loadCategories() {
+    this.categoriesService.getAllCategories().subscribe((categories: categoryDTO[]) => {
+      this.categoriesList = categories;
+    });
   }
 
   saveChanges() {

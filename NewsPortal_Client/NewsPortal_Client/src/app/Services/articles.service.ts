@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-import { articleCreationDTO, articleDTO } from '../website-components/articles/articles.model';
+import { articleCategoryDTO, articleCreationDTO, articleDTO } from '../website-components/articles/articles.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,22 @@ export class ArticlesService {
 
   private apiUrl = `${environment.apiUrl}/articles`;
 
-  getAllArticle(): Observable<articleDTO[]> {
-    return this.http.get<articleDTO[]>(this.apiUrl);
+  getAllArticles(page: number, articlesPerPage: number): Observable<any> {
+    let httpParams = new HttpParams();
+
+    httpParams = httpParams.append('page', page.toString());
+
+    httpParams = httpParams.append('articlesPerPage', articlesPerPage.toString());
+
+    return this.http.get<any>(this.apiUrl, { observe: 'response', params: httpParams });
+  }
+
+  getArticles(): Observable<articleDTO[]> {
+    return this.http.get<articleDTO[]>(`${this.apiUrl}/all`);
+  }
+
+  getArticlesCategories(): Observable<articleCategoryDTO[]> {
+    return this.http.get<articleCategoryDTO[]>(`${this.apiUrl}/articlesList`);
   }
 
   getArticleById(id: number): Observable<articleDTO> {
@@ -32,5 +46,11 @@ export class ArticlesService {
 
   delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  search(values: any): Observable<any>{
+    const httpParams = new HttpParams({ fromObject: values });
+
+    return this.http.get<articleDTO[]>(`${this.apiUrl}/search`, { params: httpParams, observe: 'response'});
   }
 }

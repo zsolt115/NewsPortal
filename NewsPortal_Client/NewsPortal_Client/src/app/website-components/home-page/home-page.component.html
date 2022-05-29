@@ -1,4 +1,19 @@
-<h1>Articles</h1>
+
+
+<div class="row">
+    <div class="col-md-10">
+        <h1>Articles</h1>
+    </div>
+    <form class="col-md-2 text-end" style="margin-top: 10px;" [formGroup]="searchForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Search article</mat-label>
+            <input formControlName="search" matInput>
+        </mat-form-field>
+    </form>
+    <!-- <div class="col-md-2 text-end" style="margin-top: 10px;">
+        <input type="search" placeholder="Search article" class="form-control" />
+    </div> -->
+</div>
 
 <app-template-list [list]="articles">
     <ng-container content>
@@ -15,7 +30,7 @@
 
             <ng-container matColumnDef="Category Name">
                 <th mat-header-cell *matHeaderCellDef>Category Name<th>
-                <td mat-cell *matCellDef="let element">{{ element.categoryId }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.categoryName }}</td>
             </ng-container>
 
             <ng-container matColumnDef="CreatedDateTime">
@@ -34,5 +49,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+
+        <mat-paginator showFirstLastButtons [length]="totalAmountOfArticles" [pageSize]="pageSize" (page)="paginateEvent($event)" class="mat-elevation-z8">
+
+        </mat-paginator>
     </ng-container>
 </app-template-list>
