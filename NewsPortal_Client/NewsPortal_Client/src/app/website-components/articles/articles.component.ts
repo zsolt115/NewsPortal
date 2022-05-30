@@ -33,9 +33,6 @@ export class ArticlesComponent implements OnInit {
   }
 
   loadArticles() {
-    // this.articlesService.getArticles().subscribe((articles: articleDTO[]) => {
-    //   this.articles = articles;
-    // });
     this.articlesService.getArticlesCategories().subscribe((articles: articleCategoryDTO[]) => {
       this.articles = articles;
     });

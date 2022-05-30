@@ -12,7 +12,7 @@ namespace NewsPortal.DTO
 
         public PaginationDTO PaginationDTO
         {
-            get { return new PaginationDTO() { Page = Page }; } 
+            get { return new PaginationDTO() { Page = Page, ArticlesPerPage = ArticlesPerPage }; }
         }
 
         public string Title { get; set; }

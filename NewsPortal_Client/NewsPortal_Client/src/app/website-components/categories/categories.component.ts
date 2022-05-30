@@ -20,7 +20,7 @@ export class CategoriesComponent implements OnInit {
 
   saveChanges(categoryToCreate: categoryCreationDTO) {
     this.categoriesService.create(categoryToCreate).subscribe(() => {
-      this.router.navigate(['/home-page']);
+      this.loadCategories();
     }, error => console.error(error));
   }
 

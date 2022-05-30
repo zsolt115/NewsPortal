@@ -14,14 +14,13 @@ import { HeadersComponent } from './headers/headers.component';
 import { ArticlesComponent } from './website-components/articles/articles.component';
 import { CategoriesComponent } from './website-components/categories/categories.component';
 import { HomePageComponent } from './website-components/home-page/home-page.component';
-import { CreateCategoryComponent } from './website-components/categories/create-category/create-category.component';
-import { CreateArticleComponent } from './website-components/articles/create-article/create-article.component';
+
 import { TemplateListComponent } from './utility/template-list/template-list.component';
 import { FormArticleComponent } from './website-components/articles/form-article/form-article.component';
 import { EditArticleComponent } from './website-components/articles/edit-article/edit-article.component';
 import { FormCategoryComponent } from './website-components/categories/form-category/form-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { EditCategoryComponent } from './website-components/categories/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +29,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ArticlesComponent,
     CategoriesComponent,
     HomePageComponent,
-    CreateCategoryComponent,
-    CreateArticleComponent,
     TemplateListComponent,
     FormArticleComponent,
     EditArticleComponent,
-    FormCategoryComponent
+    FormCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

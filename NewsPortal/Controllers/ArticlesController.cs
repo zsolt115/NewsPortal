@@ -38,6 +38,7 @@ namespace NewsPortal.Controllers {
                         c => c.Id,
                         (a, c) => new
                         {
+                            Id = a.Id,
                             Title = a.Title,
                             Description = a.Description,
                             CategoryName = c.Name,
@@ -118,6 +119,7 @@ namespace NewsPortal.Controllers {
                     c => c.Id,
                     (a, c) => new
                     {
+                        Id = a.Id,
                         Title = a.Title,
                         Description = a.Description,
                         CategoryName = c.Name,
@@ -148,6 +150,7 @@ namespace NewsPortal.Controllers {
                     c => c.Id,
                     (a, c) => new
                     {
+                        Id = a.Id,
                         Title = a.Title,
                         Description = a.Description,
                         CategoryName = c.Name,

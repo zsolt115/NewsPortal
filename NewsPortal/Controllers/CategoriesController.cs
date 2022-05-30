@@ -50,7 +50,7 @@ namespace NewsPortal.Controllers {
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult> Update(int id, [FromBody] CategoryCreationDTO updateCategory) {
             var category = mapper.Map<Category>(updateCategory);
 
@@ -63,9 +63,20 @@ namespace NewsPortal.Controllers {
             return NoContent();
         }
 
-        [HttpDelete]
-        public ActionResult Delete() {
-            throw new NotImplementedException();
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int Id) {
+            var category = await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == Id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            dbContext.Remove(category);
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace NewsPortal.DTO
         public int ArticlesPerPage
         {
             get { return articlesPerPage; }
+            set { articlesPerPage = value > 5 ? 5 : value; }
         }
     }
 }
